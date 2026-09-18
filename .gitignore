@@ -6,14 +6,22 @@
 # Dependencies
 node_modules/
 __pycache__/
+*.pyc
 .venv/
 
-# Environment
+# Environment & Secrets
 .env
+*.env.local
 
 # Database
 db/
 **/db/finally.db
+*.db
+*.db-shm
+*.db-wal
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
 
 # Next.js
 .next/
@@ -23,3 +31,6 @@ out/
 .pytest_cache/
 test-results/
 playwright-report/
+artifacts/*.png
+artifacts/*.webm
+artifacts/*.zip

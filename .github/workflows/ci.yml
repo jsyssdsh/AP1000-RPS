@@ -1,0 +1,25 @@
+name: Simulator verification
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r backend/requirements.txt
+      - run: python -m pytest backend/tests -q --junitxml=artifacts/backend-junit.xml
+        env:
+          PYTHONPATH: backend
+          OPENROUTER_API_KEY: ''
+      - run: docker compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from playwright
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-results
+          path: |
+            artifacts/
+            test/test-results/
+      - run: docker compose -f docker-compose.test.yml down
+        if: always()

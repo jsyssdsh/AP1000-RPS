@@ -8,7 +8,7 @@ export default defineConfig({
   retries: 0,
   reporter: "list",
   use: {
-    baseURL: "http://localhost:8000",
+    baseURL: process.env.BASE_URL || "http://localhost:8000",
     headless: true,
     screenshot: "only-on-failure",
   },

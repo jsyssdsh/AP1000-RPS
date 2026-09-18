@@ -1,28 +1,24 @@
+name: ap1000-rps-test
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
+    image: ap1000-rps:local
     environment:
-      - LLM_MOCK=true
-      - MASSIVE_API_KEY=
-      - DB_PATH=/tmp/test.db
-    ports:
-      - "8000:8000"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-
+      DB_PATH: /tmp/rps-test.db
+      OPENROUTER_API_KEY: ""
+    tmpfs:
+      - /tmp
   playwright:
-    image: mcr.microsoft.com/playwright:v1.52.0-jammy
+    image: mcr.microsoft.com/playwright:v1.58.2-noble
     depends_on:
       app:
         condition: service_healthy
     environment:
-      - BASE_URL=http://app:8000
-    working_dir: /work
+      BASE_URL: http://app:8000
+    working_dir: /work/test
     volumes:
-      - ./test:/work
-    command: npx playwright test
+      - .:/work
+      - playwright-deps:/work/test/node_modules
+    command: sh -c "npm ci && npx playwright test"
+volumes:
+  playwright-deps:

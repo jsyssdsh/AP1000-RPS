@@ -1,11 +1,20 @@
+name: ap1000-rps
 services:
-  finally:
+  rps:
     build: .
+    image: ap1000-rps:local
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
+    environment:
+      DB_PATH: /app/data/rps.db
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-openrouter/openai/gpt-oss-120b}
     volumes:
-      - finally-data:/app/db
-    env_file: .env
-
+      - rps-data:/app/data
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
 volumes:
-  finally-data:
+  rps-data:

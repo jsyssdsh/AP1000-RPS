@@ -10,3 +10,13 @@ __pycache__/
 .venv/
 .next/
 out/
+**/node_modules
+**/.next
+**/out
+**/__pycache__
+**/.venv
+**/.pytest_cache
+**/test-results
+**/playwright-report
+artifacts/
+test/
