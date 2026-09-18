@@ -135,8 +135,8 @@ docker compose up -d --build
 # 컨테이너 상태 및 헬스체크 확인
 docker compose ps
 
-# 웹 브라우저 접속
-# URL: http://localhost:8000
+# 웹 브라우저 접속 (기본 포트: 8080, PORT 환경변수로 변경 가능)
+# URL: http://localhost:8080
 ```
 
 ### 방법 2: 로컬 파이썬 및 Node 개발 환경

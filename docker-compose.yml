@@ -4,7 +4,7 @@ services:
     build: .
     image: ap1000-rps:local
     ports:
-      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:${PORT:-8080}:8000"
     environment:
       DB_PATH: /app/data/rps.db
       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
